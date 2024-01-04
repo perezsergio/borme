@@ -87,7 +87,6 @@ def daily_spyder(day: date) -> None:
         download_pdf(url=url, path=str(data_dir / pdf_name))
 
 
-@dates_cli
 def main(input_dates: tuple[str, ...]) -> None:
     """
     For each date, parse the BORME registry webpage for that date,
@@ -105,4 +104,4 @@ def main(input_dates: tuple[str, ...]) -> None:
 
 
 if __name__ == "__main__":
-    main()  # pylint: disable=no-value-for-parameter
+    dates_cli(main)()  # pylint: disable=no-value-for-parameter
