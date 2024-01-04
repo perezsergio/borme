@@ -55,7 +55,7 @@ def log_non_200_status_code(status_code: int, url: str) -> None:
 def log_get_request_exception(e: RequestException, url: str) -> None:
     """Log warning: got exception after sending a get http request to a url"""
     logger = getLogger()
-    logger.warning("Http get request to '%s' raised exception:\n'%s'", url, e)
+    logger.warning("Http get request to '%s' raised exception: '%s'", url, e)
 
 
 def log_no_pdfs_for_date(day: date) -> None:
