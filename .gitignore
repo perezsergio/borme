@@ -1,0 +1,5 @@
+data
+# vscode config file
+.vscode
+# ignore all files and dirs that contain 'cache' in their names
+*cache*
