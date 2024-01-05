@@ -19,7 +19,7 @@ from utils.type_casting import uniq_dates_in_list
 from utils.write_and_read_files import write_txt_from_list
 
 
-def get_pdf_urls(day: date) -> list:
+def get_pdf_urls(day: date, skip_first_and_last=True) -> list:
     """
     Parse the 'Actos inscritos' section of the BORME registry webpage for a given day,
     return a list with the links to all the pdfs of the webpage.
@@ -51,6 +51,9 @@ def get_pdf_urls(day: date) -> list:
     # The pdf urls are the href of the target elements
     pdf_urls = ["https://www.boe.es" + el["href"] for el in target_elements]
 
+    if skip_first_and_last and len(pdf_urls) > 2:
+        return pdf_urls[1:-1]
+
     return pdf_urls
 
 
@@ -69,8 +72,8 @@ def daily_spyder(day: date) -> None:
     )
     data_dir.mkdir(parents=True, exist_ok=True)  # mkdir will be ignored if dir exists
 
-    # Get pdf urls and write them to a text file in the data dir
-    pdf_urls = get_pdf_urls(day)
+    # We do not care about the first and last pdfs: they are just indices for the rest of the pdfs
+    pdf_urls = get_pdf_urls(day, skip_first_and_last=True)
 
     # if there are no pdfs urls for the date, log warning and exit function
     if len(pdf_urls) == 0:
