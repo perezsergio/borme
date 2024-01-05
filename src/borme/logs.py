@@ -98,3 +98,16 @@ def log_duplicate_dates(dates: list[date]) -> None:
         "The list of dates '%s' has duplicate elements. The duplicates will be dropped.",
         [e.strftime("%Y-%m-%d") for e in dates],
     )
+
+
+def log_unexpected_num_of_matches(
+    pattern: str, num_of_matches: str, expected_num_of_matches: str
+) -> None:
+    """Log warning: got an unexpected num of matches"""
+    logger = getLogger()
+    logger.warning(
+        "The pattern '%s' has '%s' matches, expected '%s'.",
+        pattern,
+        num_of_matches,
+        expected_num_of_matches,
+    )
