@@ -1,3 +1,11 @@
+"""
+Util functions used for interacting with the website https://www.boe.es/borme/
+
+Functions:
+    download_pdf
+    construct_borme_daily_url
+
+"""
 from datetime import date
 
 import requests
@@ -5,18 +13,18 @@ from logs import log_get_request_exception, log_non_200_status_code
 from requests.exceptions import RequestException
 
 
-def download_pdf(url: str, path: str) -> None:
+def download_pdf(url: str, path: str, date_) -> None:
     """Download pdf from url to local path."""
     # send http get request to url
     try:
         response = requests.get(url, timeout=5)
     # if get request raises exception, log warning and return
     except RequestException as e:
-        log_get_request_exception(e, url)
+        log_get_request_exception(e, url, date_)
         return
     # if the status code is not 200, log warning and return
     if response.status_code != 200:
-        log_non_200_status_code(response.status_code, url)
+        log_non_200_status_code(response.status_code, url, date_)
         return
     # write response contents to file
     with open(path, "wb") as file:

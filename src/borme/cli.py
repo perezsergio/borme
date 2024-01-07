@@ -1,3 +1,6 @@
+"""
+Add cli functionality to a function that accepts a list of dates as argument
+"""
 from io import TextIOWrapper
 from typing import Callable
 

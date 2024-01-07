@@ -1,3 +1,14 @@
+"""
+Util functions used for reading and writing data files
+
+Functions:
+    read_list_from_txt
+    write_txt_from_list
+    get_pages_in_pdf
+    read_text_from_pdf
+    write_list_of_dict_to_json
+
+"""
 from functools import reduce
 from os.path import isfile
 

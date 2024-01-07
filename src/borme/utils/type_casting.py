@@ -1,4 +1,14 @@
+"""
+Util functions used for casting values to different data types
+
+Functions:
+    cast_str_to_date
+    uniq_dates_in_list
+    flatten
+
+"""
 from datetime import date
+
 from logs import log_cannot_cast_str_to_date, log_duplicate_dates
 
 

@@ -1,5 +1,9 @@
+"""
+This module is used to set up the python root logger,
+and to contain a variety of functions that print specific warnings and informational messages.
+"""
 from datetime import date, datetime
-from logging import getLogger, FileHandler, StreamHandler, Handler, basicConfig, INFO
+from logging import INFO, FileHandler, Handler, StreamHandler, basicConfig, getLogger
 from os.path import isfile
 from pathlib import Path
 

@@ -1,3 +1,8 @@
+"""
+Given a series of dates, parse the BORME registry webpage for that date,
+write one txt file per date with the links to all the pdfs of the webpage,
+and download all the pdfs.
+"""
 import re
 from datetime import date
 from pathlib import Path
@@ -88,7 +93,7 @@ def daily_spyder(date_: date) -> None:
     for url in pdf_urls:
         # pdf from foo.es/wp/name.pdf will be saved as name.pdf
         pdf_name = url.split("/")[-1]
-        download_pdf(url=url, path=str(data_dir / pdf_name))
+        download_pdf(url=url, path=str(data_dir / pdf_name), date_=date_)
 
     log_finished_daily_spyder(date_)
 

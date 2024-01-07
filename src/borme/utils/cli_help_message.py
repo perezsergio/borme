@@ -1,3 +1,10 @@
+"""
+Util functions used for printing an in depth help message and usage statement
+
+Functions:
+    construct_help_message
+
+"""
 from os.path import basename
 from sys import argv
 from typing import Callable

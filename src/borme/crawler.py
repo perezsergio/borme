@@ -1,3 +1,7 @@
+"""
+Given a series of dates, read all the pdfs of the BORME registry webpage for each date,
+and write one jsonl file per date with the information obtained from parsing the pdfs.
+"""
 from datetime import date
 from pathlib import Path
 import re

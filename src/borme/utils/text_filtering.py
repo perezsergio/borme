@@ -1,6 +1,15 @@
+"""
+Util functions used for filtering strings based on a regex pattern.
+
+Functions:
+    drop_lines_with_pattern
+    drop_pattern
+
+"""
 import re
-from logs import log_unexpected_num_of_matches
 from datetime import date
+
+from logs import log_unexpected_num_of_matches
 
 
 def drop_lines_with_pattern(
