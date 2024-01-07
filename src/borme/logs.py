@@ -115,8 +115,8 @@ def log_duplicate_dates(dates: list[date]) -> None:
 
 def log_unexpected_num_of_matches(
     pattern: str,
-    num_of_matches: str,
-    expected_num_of_matches: str,
+    num_of_matches: int,
+    expected_num_of_matches: int,
     date_: date,
     pdf: str,
 ) -> None:

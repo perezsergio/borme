@@ -4,7 +4,7 @@ from datetime import date
 
 
 def drop_lines_with_pattern(
-    input_string: str, pattern: str, expected_num_of_matches: str, date_: date, pdf: str
+    input_string: str, pattern: str, expected_num_of_matches: int, date_: date, pdf: str
 ) -> str:
     """
     Drop the lines that contain a match to some pattern.

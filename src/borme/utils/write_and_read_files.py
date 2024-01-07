@@ -1,9 +1,8 @@
-from os.path import isfile
-from datetime import date
-
-from pypdf import PdfReader
 from functools import reduce
-import jsonlines
+from os.path import isfile
+
+import jsonlines  # type: ignore
+from pypdf import PdfReader
 
 
 def read_list_from_txt(path: str) -> list:

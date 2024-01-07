@@ -147,7 +147,7 @@ def daily_crawler(date_: date) -> None:
 
     # If the data dir does not exist, log warning and exit function
     if not data_dir.is_dir():
-        log_date_data_dir_does_not_exist(data_dir, date_)
+        log_date_data_dir_does_not_exist(str(data_dir), date_)
         return
 
     # List of pdf files inside the data dir
@@ -157,7 +157,7 @@ def daily_crawler(date_: date) -> None:
 
     # If there are no pdf files, log warning and exit function
     if len(pdf_files) == 0:
-        log_no_pdfs_in_dir(data_dir, date_)
+        log_no_pdfs_in_dir(str(data_dir), date_)
         return
 
     # Parse every pdf file
