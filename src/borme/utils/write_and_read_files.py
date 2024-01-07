@@ -1,4 +1,9 @@
 from os.path import isfile
+from datetime import date
+
+from pypdf import PdfReader
+from functools import reduce
+import jsonlines
 
 
 def read_list_from_txt(path: str) -> list:
@@ -21,3 +26,32 @@ def write_txt_from_list(my_list: list, path: str) -> None:
     with open(path, "w", encoding="utf-8") as file:
         for el in my_list:
             file.write(el + "\n")
+
+
+def get_pages_in_pdf(path_to_pdf: str) -> int:
+    """Return the number of pages in a pdf file."""
+    reader = PdfReader(path_to_pdf)
+    num_of_pages = len(reader.pages)
+    return num_of_pages
+
+
+def read_text_from_pdf(path_to_pdf: str) -> str:
+    """Return the text content of a pdf file."""
+    reader = PdfReader(path_to_pdf)
+    pages_text = [page.extract_text() for page in reader.pages]
+
+    pdf_text = reduce(lambda x, y: x + y, pages_text)
+    return pdf_text
+
+
+def write_list_of_dict_to_jsonl(
+    file_path: str, arr_of_dicts: list[dict], verbose: bool = False
+) -> None:
+    """
+    Write a jsonl file from a list of dictionaries.
+    """
+    with jsonlines.open(file_path, mode="w") as writer:
+        writer.write_all(arr_of_dicts)  # pylint: disable=no-member
+
+    if verbose:
+        print(f"Exported list of dictionaries to {file_path}")

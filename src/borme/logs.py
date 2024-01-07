@@ -1,5 +1,5 @@
 from datetime import date, datetime
-from logging import getLogger, FileHandler, StreamHandler, Handler, basicConfig
+from logging import getLogger, FileHandler, StreamHandler, Handler, basicConfig, INFO
 from os.path import isfile
 from pathlib import Path
 
@@ -29,40 +29,53 @@ def set_up_root_logger() -> None:
     handlers: list[Handler] = [FileHandler(str(log_file)), StreamHandler()]
 
     # Apply config to root logger
-    basicConfig(handlers=handlers, format="%(asctime)s: %(levelname)-8s: %(message)s")
-
-
-def log_no_target_elements(url: str, day: date) -> None:
-    """Log warning: no target elements found at url"""
-    logger = getLogger()
-    logger.warning(
-        "Couldn't find any links to pdfs at url '%s'. No pdfs will be downloaded for the date '%s'.",
-        url,
-        day.strftime("%Y-%m-%d"),
+    basicConfig(
+        handlers=handlers,
+        format="%(asctime)s: %(levelname)-8s: %(message)s",
+        level=INFO,
     )
 
 
-def log_non_200_status_code(status_code: int, url: str) -> None:
+def log_no_target_elements(url: str, date_: date) -> None:
+    """Log warning: no target elements found at url"""
+    logger = getLogger()
+    logger.warning(
+        "'%s' : Couldn't find any links to pdfs at url '%s'. No pdfs will be downloaded for the date '%s'.",
+        date_.strftime("%Y-%m-%d"),
+        url,
+        date_.strftime("%Y-%m-%d"),
+    )
+
+
+def log_non_200_status_code(status_code: int, url: str, date_: date) -> None:
     """Log warning: received non 200 status code from url"""
     logger = getLogger()
     logger.warning(
-        "Received status code '%s' from url '%s'.",
+        "'%s' : Received status code '%s' from url '%s'.",
+        date_.strftime("%Y-%m-%d"),
         status_code,
         url,
     )
 
 
-def log_get_request_exception(e: RequestException, url: str) -> None:
+def log_get_request_exception(e: RequestException, url: str, date_: date) -> None:
     """Log warning: got exception after sending a get http request to a url"""
     logger = getLogger()
-    logger.warning("Http get request to '%s' raised exception: '%s'", url, e)
+    logger.warning(
+        "'%s' : Http get request to '%s' raised exception: '%s'",
+        date_.strftime("%Y-%m-%d"),
+        url,
+        e,
+    )
 
 
-def log_no_pdfs_for_date(day: date) -> None:
+def log_no_pdfs_for_date(date_: date) -> None:
     """Log warning: no url for date."""
     logger = getLogger()
     logger.warning(
-        "Could not find any pdfs for the date '%s'. Skipping this date.", day
+        "'%s' : Could not find any pdfs for the date '%s'. Skipping this date.",
+        date_.strftime("%Y-%m-%d"),
+        date_.strftime("%Y-%m-%d"),
     )
 
 
@@ -101,13 +114,61 @@ def log_duplicate_dates(dates: list[date]) -> None:
 
 
 def log_unexpected_num_of_matches(
-    pattern: str, num_of_matches: str, expected_num_of_matches: str
+    pattern: str,
+    num_of_matches: str,
+    expected_num_of_matches: str,
+    date_: date,
+    pdf: str,
 ) -> None:
     """Log warning: got an unexpected num of matches"""
     logger = getLogger()
     logger.warning(
-        "The pattern '%s' has '%s' matches, expected '%s'.",
+        "'%s' : '%s' : The pattern '%s' has '%s' matches, expected '%s'.",
+        date_.strftime("%Y-%m-%d"),
+        pdf.split("/")[-1],
         pattern,
         num_of_matches,
         expected_num_of_matches,
+    )
+
+
+def log_date_data_dir_does_not_exist(path: str, date_: date) -> None:
+    """Log warning: there is not an existing data dir for the date"""
+    logger = getLogger()
+    logger.warning(
+        "'%s' : When attempting to read the pdfs for the date '%s', expected a directory containing all the pdfs at the path '%s', but this directory does not exist.",
+        date_.strftime("%Y-%m-%d"),
+        date_.strftime("%Y-%m-%d"),
+        path,
+    )
+
+
+def log_no_pdfs_in_dir(path: str, date_: date) -> None:
+    """Log warning: there are no pdfs in the directory."""
+    logger = getLogger()
+    logger.warning(
+        "'%s' : When attempting to read the pdfs for the date '%s', expected a directory containing all the pdfs at the path '%s', but this directory does not contain any pdfs.",
+        date_.strftime("%Y-%m-%d"),
+        date_.strftime("%Y-%m-%d"),
+        path,
+    )
+
+
+def log_finished_daily_crawler(date_: date) -> None:
+    """Log info: finished execution of the daily crawler."""
+    logger = getLogger()
+    logger.info(
+        "'%s' : Daily crawler finished execution. Parsed all the pdfs for the date '%s'.",
+        date_.strftime("%Y-%m-%d"),
+        date_.strftime("%Y-%m-%d"),
+    )
+
+
+def log_finished_daily_spyder(date_: date) -> None:
+    """Log info: finished execution of the daily spyder."""
+    logger = getLogger()
+    logger.info(
+        "'%s' : Daily spyder finished execution. Downloaded all the pdfs for the date '%s'.",
+        date_.strftime("%Y-%m-%d"),
+        date_.strftime("%Y-%m-%d"),
     )
