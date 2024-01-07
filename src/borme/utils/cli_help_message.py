@@ -38,7 +38,7 @@ def construct_help_message(func: Callable) -> str:
     # String with Notes help message
     notes = (
         "*Notes:\n"
-        + "  when reading from a text file, "
+        + "  When reading from a text file, "
         + "the dates passed in directly through the command line will be ignored.\n"
         + f"  For example: '{script_name} -f dates.txt 20010101' "
         + "only reads the dates from dates.txt and "
