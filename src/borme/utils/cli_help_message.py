@@ -17,11 +17,16 @@ def construct_help_message(func: Callable) -> str:
 
     # Get name of the script executed in the CL (not the name of the current script)
     script_name = basename(argv[0])
+
     # Get docstring of the function, remove indentation
     func_docstring = func.__doc__
 
     # Use figlet to create a fancy formatted title
-    title = figlet_format(script_name.split(".")[0], font="rozzo")
+    script_title = script_name.split(".")[0]
+    if script_title in ["main", "borme"]:
+        script_title = "scrapper"
+    title = figlet_format("borme " + script_title, font="rozzo")
+
     # String with Args help message
     args = "Arguments:\n" + "  DATE\t date with the format YYYYMMDD"
     # String with Options help message
